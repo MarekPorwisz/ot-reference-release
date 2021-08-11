@@ -214,9 +214,10 @@ deploy_ncs()
     unset ZEPHYR_BASE
     west init -m https://github.com/nrfconnect/sdk-nrf --mr master || true
     cd nrf
-    git checkout master
-    git branch -D config_branch || true
-    git checkout -b config_branch "$commit_hash" || die "ERROR: unable to checkout the specified sdk-nrf commit."
+    git remote add mbolivar https://github.com/mbolivar-nordic/sdk-nrf.git || true
+    git fetch mbolivar
+    git branch -D upmerge-2021-07-26 || true
+    git checkout mbolivar/upmerge-2021-07-26
     west update
     cd ..
     pip3 install --user -r zephyr/scripts/requirements.txt
