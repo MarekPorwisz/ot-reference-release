@@ -214,9 +214,10 @@ deploy_ncs()
     unset ZEPHYR_BASE
     west init -m https://github.com/nrfconnect/sdk-nrf --mr master || true
     cd nrf
-    git checkout master
-    git branch -D config_branch || true
-    git checkout -b config_branch "$commit_hash" || die "ERROR: unable to checkout the specified sdk-nrf commit."
+    git remote add edmont https://github.com/edmont/sdk-nrf.git || true
+    git fetch edmont
+    git branch -D dev/ref-device || true
+    git checkout edmont/dev/ref-device
     west update
     cd ..
     pip3 install --user -r zephyr/scripts/requirements.txt
